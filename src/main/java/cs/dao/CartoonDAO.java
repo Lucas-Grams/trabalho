@@ -16,13 +16,13 @@ public class CartoonDAO {
     private ResultSet rs;
     public ArrayList<Cartoon> getCartoons(int id){
         ArrayList<Cartoon> cartoons = new ArrayList<Cartoon>();
-        Cartoon cartoon = new Cartoon();
         try(Connection connection = new ConnectDB().getConexao()){
             this.sql = "Select * FROM cartoon WHERE id_user = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setInt(1,id);
             this.rs = this.stmt.executeQuery();
             while(rs.next()){
+                Cartoon cartoon = new Cartoon();
                 cartoon.setId(rs.getInt("id_cartoon"));
                 cartoon.setTitle(rs.getString("title"));
                 cartoon.setNote(rs.getInt("note"));
@@ -57,7 +57,7 @@ public class CartoonDAO {
     }
     public boolean setCartoon(Cartoon c, int id){
         try(Connection connection =  new ConnectDB().getConexao()){
-            this.sql = "INSERT INTO cartoon (title, note, episodes, platform, id_user) VALUES (?, ?, ?, ?, ?)";
+            this.sql = "INSERT INTO cartoon (title, note, episodes, plataform, id_user) VALUES (?, ?, ?, ?, ?)";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setString(1, c.getTitle());
             this.stmt.setInt(2, c.getNote());
@@ -91,10 +91,12 @@ public class CartoonDAO {
 
     public boolean dellCartoon(int id){
         try(Connection connection = new ConnectDB().getConexao()){
-            this.sql = "DELETE FROM cartton WHERE id_cartoon = ?";
+            this.sql = "DELETE FROM cartoon WHERE id_cartoon = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setInt(1, id);
-            return this.stmt.execute();
+            if(this.stmt.executeUpdate()>0){
+                return true;
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }

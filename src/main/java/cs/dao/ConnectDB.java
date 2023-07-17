@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDB {
-        private static final String DRIVER = "org.postgres.Driver";
+        private static final String DRIVER = "org.postgresql.Driver";
         private static final String URL = "jdbc:postgresql://localhost/poo";
         private static final String USERDB = "postgres";
         private static final String SENHA ="1234";

@@ -11,6 +11,7 @@
 <html>
 <head>
   <title>EditCartoon</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -19,30 +20,28 @@
       <div class="header">
         <h2 class="text-center mb-4">Editar Cartoon</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <button class="btn btn-danger">Sair</button>
+          <a th:href="@{/voltarUser/{id}(id=${id})}" class="btn btn-danger">Voltar</a>
         </div>
       </div>
       <div class="content">
-        <form id="cartoon-form" action="CartoonController">
-          <input type="hidden" name="acao" value="editCartoon">
-          <input type="hidden" name="idMovie" value="${cartoon.getId()}">
-          <input type="hidden" name="idUser" value=${idUser}>
+        <form id="cartoon-form" th:action="@{/updateCartoon/{id}(id=${id})}" method="POST">
           <div class="form-group">
             <label for="title">Título:</label>
-            <input type="text" class="form-control" id="title" name="title" value="${cartoon.title}" required>
+            <input type="text" class="form-control" id="title" name="title" th:value="${cartoon.title}" required>
           </div>
           <div class="form-group">
-            <label for="rating">Nota:</label>
-            <input type="number" class="form-control" id="rating" name="rating" step="0.1" min="0" max="10" value="${cartoon.note}" required>
+            <label for="note">Nota:</label>
+            <input type="number" class="form-control" id="note" name="note" step="0.1" min="0" max="10" th:value="${cartoon.note}" required>
           </div>
           <div class="form-group">
             <label for="episodes">Episódios:</label>
-            <input type="text" class="form-control" id="episodes" name="episodes" value="${cartoon.episodes}" required>
+            <input type="text" class="form-control" id="episodes" name="episodes" th:value="${cartoon.episodes}" required>
           </div>
           <div class="form-group">
-            <label for="platform">Plataforma:</label>
-            <input type="text" class="form-control" id="platform" name="platform" value="${cartoon.plataform}" required>
+            <label for="plataform">Plataforma:</label>
+            <input type="text" class="form-control" id="plataform" name="plataform" th:value="${cartoon.plataform}" required>
           </div>
+          <input type="hidden"  name="id" th:value="${cartoon.id}">
           <button type="submit" class="btn btn-primary btn-block">Salvar</button>
         </form>
       </div>

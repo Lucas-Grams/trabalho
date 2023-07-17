@@ -16,14 +16,14 @@ public class MovieDAO {
 
     public ArrayList<Movie> getMovies(int id){
         ArrayList<Movie> movies = new ArrayList<Movie>();
-        Movie movie = new Movie();
         try(Connection connection = new ConnectDB().getConexao()){
             this.sql = "Select * FROM movie WHERE id_user = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setInt(1,id);
             this.rs = this.stmt.executeQuery();
             while(rs.next()){
-                movie.setId(rs.getInt("id_filme"));
+                Movie movie = new Movie();
+                movie.setId(rs.getInt("id_movie"));
                 movie.setTitle(rs.getString("title"));
                 movie.setNote(rs.getInt("note"));
                 movie.setDuration(rs.getInt("duration"));
@@ -39,12 +39,12 @@ public class MovieDAO {
     public Movie getMovie(int id){
         Movie movie = new Movie();
         try(Connection connection = new ConnectDB().getConexao()){
-            this.sql = "SELECT * FROM movie WHERE id_filme = ?";
+            this.sql = "SELECT * FROM movie WHERE id_movie = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setInt(1, id);
             this.rs = this.stmt.executeQuery();
             while(rs.next()){
-                movie.setId(rs.getInt("id_filme"));
+                movie.setId(rs.getInt("id_movie"));
                 movie.setTitle(rs.getString("title"));
                 movie.setNote(rs.getInt("note"));
                 movie.setDuration(rs.getInt("duration"));
@@ -58,7 +58,7 @@ public class MovieDAO {
 
     public boolean setMovie(Movie m, int id){
         try(Connection connection =  new ConnectDB().getConexao()){
-            this.sql = "INSERT INTO movie (title, note, duration, platform, id_user) VALUES (?, ?, ?, ?, ?)";
+            this.sql = "INSERT INTO movie (title, note, duration, plataform, id_user) VALUES (?, ?, ?, ?, ?)";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setString(1, m.getTitle());
             this.stmt.setInt(2, m.getNote());
@@ -75,6 +75,9 @@ public class MovieDAO {
 
     public boolean upMovie(Movie m){
         try(Connection connection = new ConnectDB().getConexao()) {
+            connection.setAutoCommit(false);
+            System.out.println(m.getPlataform());
+            System.out.println(m.getId());
             this.sql = "UPDATE movie SET title = ?, note = ?, duration = ?, plataform = ? WHERE id_movie = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setString(1, m.getTitle());
@@ -83,6 +86,8 @@ public class MovieDAO {
             this.stmt.setString(4, m.getPlataform());
             this.stmt.setInt(5, m.getId());
             this.stmt.execute();
+            connection.commit();
+            System.out.println("editou o filme");
             return true;
         }catch(SQLException e){
             e.printStackTrace();
@@ -91,11 +96,14 @@ public class MovieDAO {
     }
 
     public boolean dellMovie(int id){
+        System.out.println(id);
         try(Connection connection = new ConnectDB().getConexao()){
             this.sql = "DELETE FROM movie WHERE id_movie = ?";
             this.stmt = connection.prepareStatement(this.sql);
             this.stmt.setInt(1, id);
-            return this.stmt.execute();
+             if(this.stmt.executeUpdate() > 0){
+                 return true;
+             }
         }catch (SQLException e){
             e.printStackTrace();
         }

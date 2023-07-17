@@ -10,13 +10,13 @@ public class UserDAO {
     private ResultSet rs;
     public ArrayList<User> getUsers(){
         ArrayList<User> users = new ArrayList<User>();
-        User user = new User();
 
         try(Connection connection = new ConnectDB().getConexao()){
-            this.sql = "SELECT * FROM user_  ";
+            this.sql = "SELECT * FROM user_;";
             this.stmt = connection.prepareStatement(this.sql);
             this.rs = stmt.executeQuery();
             while(this.rs.next()){
+                User user = new User();
                 user.setId(this.rs.getInt("id_user"));
                 user.setName(this.rs.getString("name"));
                 user.setCpf(this.rs.getString("cpf"));

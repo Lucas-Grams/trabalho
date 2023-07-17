@@ -26,11 +26,13 @@ public class MovieService {
             System.out.println("deu tudo certo negao");
             return true;
         }else{
+            System.out.println("queboru o brique do filme");
             return false;
         }
     }
 
     public boolean editMovie(Movie m){
+        System.out.println(m.getId());
         if(md.upMovie(m)){
             System.out.println("deu certo pexe");
             return true;

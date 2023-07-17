@@ -15,7 +15,7 @@
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
             <h2 class="text-center mb-4">Login</h2>
-            <form id="login-form" action="UserController" method="post">
+            <form id="login-form" th:action="@{/signIn}" method="post">
                 <input type="hidden" name="acao" value="login">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -26,11 +26,8 @@
                     <input type="password" class="form-control" id="password" name="password" required placeholder="insiraSuaSenha123">
                 </div>
                 <button type="submit" class="btn btn-success btn-block">Entrar</button>
-                <c:if test="${erro}">
-                    <div class="danger">${erro}</div>
-                </c:if>
             </form>
-            <h5>Ainda não tem conta? Faça uma <a href="cadastro">agora</a> mesmo!</h5>
+            <h5>Ainda não tem conta? Faça uma <a th:href="@{/cadastro}">agora</a> mesmo!</h5>
         </div>
     </div>
 </div>

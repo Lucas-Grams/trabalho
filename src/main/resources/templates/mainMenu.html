@@ -15,24 +15,14 @@
       <div class="header">
         <h2 class="text-center mb-4">Tela Principal</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <a href="index.html" class="btn btn-danger">Sair</a>
+          <a th:href="@{/user/logout}" class="btn btn-danger">Sair</a>
         </div>
       </div>
       <div class="content">
         <div class="text-center">
-          <form action="MovieController">
-            <input type="hidden" name="acao" value="listMovie"></input
-            <input type="hidden" name="id" value=${user.id}></input
-            <button type="submit" class="btn btn-primary">Filmes</button>
-          </form>
-          <form action="BookController">
-            <input type="hidden" name="acao" value="listBook"></input
-            <button type="submit" class="btn btn-primary">Livros</button>
-          </form>
-          <form action="CartoonController">
-            <input type="hidden" value="listCartoon"></input
-            <button type="submit" class="btn btn-primary">Cartoons</button>
-          </form>
+            <a th:href="@{/listMovie/{id}(id = ${user.id})}" class="btn btn-primary">Filmes</a>
+            <a th:href="@{/listBook/{id}(id = ${user.id})}" class="btn btn-primary">Livros</a>
+            <a th:href="@{/listCartoon/{id}(id = ${user.id})}" class="btn btn-primary">Cartoons</a>
         </div>
       </div>
     </div>

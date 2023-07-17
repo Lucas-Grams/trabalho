@@ -18,14 +18,10 @@
   <div class="row justify-content-center mt-5">
     <div class="col-md-8">
       <div class="header">
-        <h2 class="text-center mb-4">Lista de Filmes</h2>
+        <h2 class="text-center mb-4">Lista de Cartoons</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <form action="BOOKController" method="post">
-            <input type="hidden" name="acao" value="insert"></input>
-            <input type="hidden" name="idUser" value=${idUser}></input>
-            <button type="submit" class="btn btn-primary">Adicionar Livros</button>
-          </form>
-          <button class="btn btn-danger">Sair</button>
+          <a th:href="@{/addCartoon/{id}(id=${id})}" class="btn btn-primary">Adicionar Cartoons</a>
+          <a th:href="@{/voltarUser/{id}(id=${id})}" class="btn btn-danger">Voltar</a>
         </div>
       </div>
       <div class="content">
@@ -34,32 +30,27 @@
           <tr>
             <th>Título</th>
             <th>Nota</th>
-            <th>Páginas</th>
+            <th>Episódios</th>
             <th>Plataforma</th>
             <th>Ações</th>
           </tr>
           </thead>
           <tbody>
-          <c:forEach items="${cartoons}" var="c">
-            <tr>
-              <td>${c.tilte}</td>
-              <td>${c.note}</td>
-              <td>${c.pages}</td>
-              <td>${c.plataform}</td>
+            <tr th:each="c:${cartoon}">
+              <td th:text="${c.title}"></td>
+              <td th:text="${c.note}"></td>
+              <td th:text="${c.episodes}"></td>
+              <td th:text="${c.plataform}"></td>
               <td>
-                <form action="insertBook.jsp" method="post">
-                  <input type="hidden" name="acao" value="edit"></input>
-                  <input type="hidden" name="idBook" value=${c.id}></input
-                  <button type="submit" class="btn btn-primary btn-sm mr-2">Editar</button>
-                </form>
-                <form action="insertBook.jsp" method="post">
-                  <input type="hidden" name="acao" value="dellBook"></input>
-                  <input type="hidden" name="idBook" value=${c.id}></input
-                  <button type="submit" class="btn btn-primary btn-sm mr-2">Excluir</button>
-                </form>
+                <a th:href="@{/editCartoon/{idCartoon}/{id}(idCartoon=${c.id},id=${id})}" class="btn btn-primary btn-sm mr-2">Editar</a>
+                <a th:href="@{/dellCartoon/{idCartoon}/{id}(idCartoon=${c.id}, id=${id})}" class="btn btn-primary btn-sm mr-2">Excluir</a>
               </td>
             </tr>
-          </c:forEach>
+          <tr>
+            <td>Total de episódios vistos:</td>
+            <td></td>
+            <td th:text="${soma}"></td>
+          </tr>
           </tbody>
         </table>
       </div>

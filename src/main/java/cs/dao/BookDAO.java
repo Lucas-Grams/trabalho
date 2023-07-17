@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
         public ArrayList<Book> getBooks(int id){
             ArrayList<Book> movies = new ArrayList<Book>();
-            Book book = new Book();
             try(Connection connection = new ConnectDB().getConexao()){
                 this.sql = "Select * FROM book WHERE id_user = ?";
                 this.stmt = connection.prepareStatement(this.sql);
                 this.stmt.setInt(1,id);
                 this.rs = this.stmt.executeQuery();
                 while(rs.next()){
+                    Book book = new Book();
                     book.setId(rs.getInt("id_book"));
                     book.setTitle(rs.getString("title"));
                     book.setNote(rs.getInt("note"));
@@ -38,7 +38,7 @@ import java.util.ArrayList;
         public Book getBook(int id){
             Book book = new Book();
             try(Connection connection = new ConnectDB().getConexao()){
-                this.sql = "Select * FROM book WHERE id_user = ?";
+                this.sql = "Select * FROM book WHERE id_book = ?;";
                 this.stmt = connection.prepareStatement(this.sql);
                 this.stmt.setInt(1,id);
                 this.rs = this.stmt.executeQuery();
@@ -59,7 +59,7 @@ import java.util.ArrayList;
 
         public boolean setBook(Book b, int id){
             try(Connection connection =  new ConnectDB().getConexao()){
-                this.sql = "INSERT INTO book (title, note, pages, platform, id_user) VALUES (?, ?, ?, ?, ?)";
+                this.sql = "INSERT INTO book (title, note, pages, plataform, id_user) VALUES (?, ?, ?, ?, ?)";
                 this.stmt = connection.prepareStatement(this.sql);
                 this.stmt.setString(1, b.getTitle());
                 this.stmt.setInt(2,b.getNote());
@@ -83,7 +83,7 @@ import java.util.ArrayList;
                 this.stmt.setInt(3, b.getPages());
                 this.stmt.setString(4, b.getPlataform());
                 this.stmt.setInt(5, b.getId());
-                this.stmt.execute();
+                this.stmt.executeUpdate();
                 return true;
             }catch(SQLException e){
                 e.printStackTrace();

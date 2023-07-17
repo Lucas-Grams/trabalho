@@ -11,6 +11,7 @@
 <html>
 <head>
   <title>EditMovie</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -19,30 +20,28 @@
       <div class="header">
         <h2 class="text-center mb-4">Editar Filme</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <button class="btn btn-danger">Sair</button>
+          <a th:href="@{/voltarUser/{id}(id=${id})}" class="btn btn-danger">Voltar</a>
         </div>
       </div>
       <div class="content">
-        <form id="movie-form" action="MovieController">
-          <input type="hidden" name="acao" value="editMovie">
-          <input type="hidden" name="idMovie" value="${movie.id}">
-          <input type="hidden" name="idUser" value=${idUser}>
+        <form id="movie-form" th:action="@{/updateMovie/{id}(id=${id})}" method="POST">
           <div class="form-group">
             <label for="title">Título:</label>
-            <input type="text" class="form-control" id="title" name="title" value="${movie.title}" required>
+            <input type="text" class="form-control" id="title" name="title" th:value="${movie.title}" required>
           </div>
           <div class="form-group">
-            <label for="rating">Nota:</label>
-            <input type="number" class="form-control" id="rating" name="rating" step="0.1" min="0" max="10" value="${movie.note}" required>
+            <label for="note">Nota:</label>
+            <input type="number" class="form-control" id="note" name="note" step="0.1" min="0" max="10" th:value="${movie.note}" required>
           </div>
           <div class="form-group">
             <label for="duration">Duração:</label>
-            <input type="text" class="form-control" id="duration" name="duration" value="${movie.duration}" required>
+            <input type="text" class="form-control" id="duration" name="duration" th:value="${movie.duration}" required>
           </div>
           <div class="form-group">
-            <label for="platform">Plataforma:</label>
-            <input type="text" class="form-control" id="platform" name="platform" value="${movie.plataform}" required>
+            <label for="plataform">Plataforma:</label>
+            <input type="text" class="form-control" id="plataform" name="plataform" th:value="${movie.plataform}" required>
           </div>
+          <input type="hidden"  name="id" th:value="${movie.id}">
           <button type="submit" class="btn btn-primary btn-block">Salvar</button>
         </form>
       </div>

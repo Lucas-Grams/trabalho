@@ -11,11 +11,14 @@ public class UserService {
         ArrayList<User> users = new ArrayList<User>();
         users = this.ud.getUsers();
         for (User us: users) {
-            if(u.getEmail().equals(us.getEmail()) && u.getPassword().equals(us.getPassword())){
+            System.out.println(us.getEmail() +"/"+ us.getPassword() +"///\n"+ u.getEmail() +"/+"+ u.getPassword());
+            if(us.getEmail().equals(u.getEmail()) && us.getPassword().equals(u.getPassword())){
+                System.out.println("achou o usuario");
                 return us;
+            }else{
+                System.out.println("não achou o User");
             }
         }
-    System.out.println("não achou o User");
         return null;
     }
 
@@ -26,6 +29,14 @@ public class UserService {
 
 
     public boolean insertUser(User u){
+        ArrayList<User> u2 = ud.getUsers();
+        for (User user: u2) {
+            System.out.println(user.getEmail());
+            System.out.println(u.getEmail());
+            if(user.getEmail().equals(u.getEmail())){
+                return false;
+            }
+        }
         if(this.ud.setUser(u)){
             return true;
         }
